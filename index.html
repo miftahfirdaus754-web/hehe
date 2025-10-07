@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>hahahaa</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html, body{
+  overflow-x:hidden;
+  overflow-y:auto;
+  height:auto;
+  font-family:'Poppins',sans-serif;
+  background:url('background.jpg') no-repeat center center/cover;
+  display:flex;
+  flex-direction:column;
+}
+section{
+  display:none;
+  min-height:100vh;
+  padding:40px 20px 100px;
+  text-align:center;
+  position:relative;
+  overflow:auto;
+}
+section.active{display:block;}
+h1,h2{color:#1f5f87;text-shadow:1px 1px 4px #fff;}
+
+/* Halaman Awal */
+#awal{display:flex; flex-direction:column; justify-content:center; align-items:center; background:url('background.jpg') no-repeat center/cover;}
+#awal h1{font-size:28px; margin-bottom:20px; color:#fff; text-shadow:2px 2px 6px rgba(0,0,0,0.5);}
+#awal input{padding:12px; width:70%; max-width:280px; border-radius:10px; border:2px solid #1f5f87; font-size:16px; text-align:center; margin-bottom:30px;}
+#awal button{padding:12px 25px; border:none; border-radius:10px; background:#1f5f87; color:#fff; font-weight:bold; font-size:16px; cursor:pointer; transition:.3s; position:absolute; bottom:60px;}
+#awal button:hover{background:#163f5c;}
+
+/* Semua Halaman (kecuali awal): gradasi biru ke putih */
+#hal1, #hal2, #hal3{
+  background:linear-gradient(to bottom, #89CFF0, #ffffff);
+}
+
+/* Halaman 1 (Kue) */
+#hal1 p { margin-bottom:12px; } 
+.cake { margin-top:100px; } 
+.layer{border-radius:50%/20%; border:4px solid #fff; margin:-10px auto 0;}
+.bottom{width:220px; height:80px; background:linear-gradient(to bottom,#5fa8d3,#1f5f87);}
+.middle{width:160px; height:70px; background:linear-gradient(to bottom,#7ec8e3,#327ba8);}
+.top{width:100px; height:60px; background:linear-gradient(to bottom,#a7d8f7,#3a9bdc); position:relative;}
+.candle{width:14px; height:45px; background:repeating-linear-gradient(to bottom,#fff,#fff 6px,#ccc 6px,#ccc 12px); border-radius:4px; position:absolute; top:-45px; left:50%; transform:translateX(-50%);}
+.flame{width:18px; height:18px; border-radius:50%; background:radial-gradient(circle at 30% 30%,#fff8a0,#ff9800,#e65100); position:absolute; top:-65px; left:50%; transform:translateX(-50%); animation:flicker 1s infinite alternate; box-shadow:0 0 15px 6px rgba(255,180,50,0.6);}
+@keyframes flicker{from{transform:translateX(-50%) scale(1);opacity:1;} to{transform:translateX(-50%) scale(1.2);opacity:.8;}}
+
+/* Halaman 2 (Galeri) */
+.gallery{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; max-width:700px; margin:50px auto 0; justify-items:center;}
+.gallery img{width:200px; height:200px; object-fit:cover; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,.4); transition:transform .3s, box-shadow .3s; position:relative;}
+.gallery img:hover{transform:scale(1.05); box-shadow:0 0 20px 5px rgba(255,255,255,0.9);}
+.gallery img.kilau::after{content:""; position:absolute; top:0; left:0; width:100%; height:100%; border-radius:12px; pointer-events:none; background:radial-gradient(circle,#fff8 0%,#fff0 70%); opacity:1;}
+
+/* Halaman 3 (Puisi) */
+#hal3{overflow-y:auto;}
+.poem{max-width:700px; margin:40px auto; background:rgba(255,255,255,0.85); padding:20px; border-radius:15px; box-shadow:0 4px 12px rgba(0,0,0,.3); line-height:1.7; color:#1f5f87; font-style:italic;}
+
+/* Navigasi */
+nav{display:none; justify-content:center; gap:12px; padding:15px; background:rgba(255,255,255,0.8); box-shadow:0 -2px 8px rgba(0,0,0,0.2); position:fixed; bottom:0; left:0; right:0;}
+nav button{padding:8px 15px; border:none; border-radius:6px; background:#3a9bdc; color:#fff; font-weight:bold; cursor:pointer; transition:.3s;}
+nav button:hover{background:#2f7bb0;}
+
+/* Dekorasi animasi Halaman 1 */
+.decoration{position:absolute; pointer-events:none;}
+.balloon{width:30px; height:45px; border-radius:50% 50% 50% 50%/60% 60% 40% 40%; animation:floatUp 8s linear forwards; z-index:10; position:absolute;}
+@keyframes floatUp{0%{transform:translateY(0vh) scale(0.8);opacity:1;} 100%{transform:translateY(-120vh) scale(1);opacity:1;}}
+.confetti{width:8px; height:8px; border-radius:2px; animation:confettiFall 4s linear forwards;}
+.floating-word{position:absolute; font-size:16px; color:#1f5f87; font-weight:bold; text-shadow:1px 1px 4px #fff; animation:floatWord 6s linear forwards; z-index:15; pointer-events:none;}
+@keyframes floatWord{0%{transform:translateY(20px);opacity:0;}50%{opacity:1;}100%{transform:translateY(-50px);opacity:0;}}
+@keyframes confettiFall{0%{transform:translateY(-10vh) rotate(0deg);opacity:1;}100%{transform:translateY(120vh) rotate(360deg);opacity:0;}}
+
+/* Halaman 3: bintang lembut */
+.star-soft{border-radius:50%; position:absolute; opacity:0.7; animation:softFall linear forwards;}
+@keyframes softFall{0%{transform:translateY(0) scale(0.3);opacity:0.5;}100%{transform:translateY(120vh) scale(1);opacity:0;}}
+</style>
+</head>
+<body>
+
+<!-- Halaman Awal -->
+<section id="awal" class="active">
+<h1>Masukkan Nama Kamu </h1>
+<input type="text" id="namaInput" placeholder="Tulis nama di sini">
+<button onclick="mulai()">Lanjut ➤</button>
+</section>
+
+<!-- Halaman 1: Kue -->
+<section id="hal1">
+<h1 id="sapaan"></h1>
+<p>Selamat ulang tahun sayang, semoga panjang umur, sehat selalu, dan dimudahkan semua urusannya 💕</p>
+<p>Aku sayang kamu, maaf cuma bisa kasih ini dulu ya 😢 nanti ketemu aku kasih hadiah beneran 🎁</p>
+<div class="decor-container"></div>
+<div class="cake">
+  <div class="layer top">
+    <div class="candle"></div>
+    <div class="flame"></div>
+  </div>
+  <div class="layer middle"></div>
+  <div class="layer bottom"></div>
+</div>
+</section>
+
+<!-- Halaman 2: Galeri -->
+<section id="hal2">
+<h2>Foto Cantik Kamuu 📸</h2>
+<div class="gallery">
+<img src="foto1.jpg" alt="foto1">
+<img src="foto2.jpg" alt="foto2">
+<img src="foto3.jpg" alt="foto3">
+<img src="foto4.jpg" alt="foto4">
+<img src="foto5.jpg" alt="foto5">
+<img src="foto6.jpg" alt="foto6">
+</div>
+<div class="decor-container"></div>
+</section>
+
+<!-- Halaman 3: Puisi -->
+<section id="hal3">
+<h2>Untukmu, Cinta 💌</h2>
+<div class="poem">
+"Sempurna dalam Jarak"<br>
+Malam merangkai sunyi<br>
+namamu menjelma cahaya,<br>
+menyusup ke ruang hati<br>
+yang kau tinggalkan sementara.<br><br>
+Jarak memang merenggangkan tangan,<br>
+tapi tidak mampu merenggangkan perasaan;<br>
+rindu menyeberangi waktu,<br>
+menemui senyummu di dalam bayangan.<br><br>
+Cinta ini bukan sekadar dekat,<br>
+ia tumbuh di antara jeda dan sabar,<br>
+dan justru di sanalah kutahu<br>
+betapa sempurna dirimu—<br>
+meski tak selalu bisa kugapai<br>
+dalam peluk nyata.<br><br>
+Namun aku percaya,<br>
+Di setiap detak, aku berjanji:<br>
+selama semesta merestui,<br>
+aku akan tetap menunggu,<br>
+hingga jarak kalah<br>
+oleh cintaku padamu.
+</div>
+<div class="decor-container"></div>
+</section>
+
+<!-- Audio -->
+<audio id="lagu" src="MP3.mp3" preload="auto" loop></audio>
+
+<!-- Navigasi -->
+<nav id="navigasi">
+<button onclick="showPage(1)">1</button>
+<button onclick="showPage(2)">2</button>
+<button onclick="showPage(3)">3</button>
+</nav>
+
+<script>
+function mulai(){
+  const nama=document.getElementById("namaInput").value||"Sayang";
+  localStorage.setItem("namaUser",nama);
+  document.getElementById("awal").style.display="none";
+  document.getElementById("hal1").classList.add("active");
+  document.getElementById("navigasi").style.display="flex";
+  document.getElementById("sapaan").textContent="Halo, "+nama+"!";
+  const audio=document.getElementById("lagu");
+  audio.play().catch(()=>{console.log("Autoplay dicegah.");});
+}
+function showPage(no){
+  document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+  document.getElementById("hal"+no).classList.add("active");
+}
+// Dekorasi Halaman 1
+const deco1=document.querySelector("#hal1 .decor-container");
+function createBalloon(){
+  if(deco1.querySelectorAll(".balloon").length>=4) return;
+  const balloon=document.createElement("div");
+  balloon.classList.add("balloon");
+  const colors=["#89CFF0","#1f5f87","#A7D8F7","#f8c8dc","#c3aed6","#ffffffcc"];
+  balloon.style.background=`radial-gradient(circle at 30% 30%, ${colors[Math.floor(Math.random()*colors.length)]}, ${colors[Math.floor(Math.random()*colors.length)]})`;
+  balloon.style.left = 20 + Math.random()*60 + "%"; 
+  balloon.style.top="100vh";
+  deco1.appendChild(balloon);
+  setTimeout(()=>balloon.remove(),8000);
+}
+function createConfetti(){
+  const c=document.createElement("div");
+  c.classList.add("decoration","confetti");
+  const colors=["#89CFF0","#f8c8dc","#c3aed6","#7ec8e3"];
+  c.style.backgroundColor=colors[Math.floor(Math.random()*colors.length)];
+  c.style.left=Math.random()*90+"%";
+  c.style.top="-10vh";
+  deco1.appendChild(c);
+  setTimeout(()=>c.remove(),4000);
+}
+function createFloatingWord1(text){
+  const word=document.createElement("div");
+  word.classList.add("floating-word");
+  word.textContent=text;
+  word.style.left=10+Math.random()*80+"%";
+  word.style.top=10+Math.random()*40+"%";
+  deco1.appendChild(word);
+  setTimeout(()=>word.remove(),6000);
+}
+setInterval(()=>{if(document.getElementById("hal1").classList.contains("active")){if(Math.random()<0.5) createBalloon(); if(Math.random()<0.4) createBalloon(); createConfetti(); const words=["Happy Birthday 💖","Love You 😘","Semoga Ceria 🌸","Bahagia Selalu 🥰","You Are Special ✨"]; createFloatingWord1(words[Math.floor(Math.random()*words.length)]);}},800);
+
+// Halaman 2 kilau
+function kilauFoto(){
+  const imgs=document.querySelectorAll("#hal2 .gallery img");
+  const idx=Math.floor(Math.random()*imgs.length);
+  imgs[idx].classList.add("kilau");
+  setTimeout(()=>{imgs[idx].classList.remove("kilau");},400);
+}
+
+// Halaman 3 bintang
+const deco3=document.querySelector("#hal3 .decor-container");
+function createSoftStar(){
+  for(let i=0;i<3;i++){
+    const star=document.createElement("div");
+    star.classList.add("star-soft");
+    star.style.width=4+Math.random()*6+"px";
+    star.style.height=4+Math.random()*6+"px";
+    star.style.left=Math.random()*90+"%";
+    star.style.top="-5vh";
+    deco3.appendChild(star);
+    setTimeout(()=>star.remove(),8000);
+  }
+}
+setInterval(()=>{if(document.getElementById("hal2").classList.contains("active")) kilauFoto(); if(document.getElementById("hal3").classList.contains("active")) createSoftStar();},500);
+</script>
+</body>
+</html>
